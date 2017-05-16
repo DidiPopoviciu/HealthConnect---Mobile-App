@@ -1,7 +1,15 @@
+App1.LoginActivity, App1;md5579855c995bdb073d8182511e793544c.LoginActivity
+App1.LoginActivity, App1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5579855c995bdb073d8182511e793544c.LoginActivity
+App1.LoginActivity;md5579855c995bdb073d8182511e793544c.LoginActivity
+app1.LoginActivity;md5579855c995bdb073d8182511e793544c.LoginActivity
 App1.MainActivity, App1;md5579855c995bdb073d8182511e793544c.MainActivity
 App1.MainActivity, App1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5579855c995bdb073d8182511e793544c.MainActivity
 App1.MainActivity;md5579855c995bdb073d8182511e793544c.MainActivity
 app1.MainActivity;md5579855c995bdb073d8182511e793544c.MainActivity
+App1.SplashScreenActivity, App1;md5579855c995bdb073d8182511e793544c.SplashScreenActivity
+App1.SplashScreenActivity, App1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5579855c995bdb073d8182511e793544c.SplashScreenActivity
+App1.SplashScreenActivity;md5579855c995bdb073d8182511e793544c.SplashScreenActivity
+app1.SplashScreenActivity;md5579855c995bdb073d8182511e793544c.SplashScreenActivity
 Xamarin.Auth._MobileServices.AndroidAccountStore/SecretAccount, Microsoft.WindowsAzure.Mobile.Ext;md56beaf3ca16f9b29c56822643de3b05fa.AndroidAccountStore_SecretAccount
 Xamarin.Auth._MobileServices.AndroidAccountStore+SecretAccount, Microsoft.WindowsAzure.Mobile.Ext, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;md56beaf3ca16f9b29c56822643de3b05fa.AndroidAccountStore_SecretAccount
 Xamarin.Auth._MobileServices.AndroidAccountStore.SecretAccount;md56beaf3ca16f9b29c56822643de3b05fa.AndroidAccountStore_SecretAccount

@@ -24,6 +24,7 @@ C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\res\dra
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\res\drawable\health_connect_android_icon.png
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\R.cs.flag
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\uploadflags.txt
+C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\App1.csprojResolveAssemblyReference.cache
+C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\res\layout\login.xml
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\bin\Debug\App1.dll.mdb
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\App1.dll.mdb
-C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\App1.csprojResolveAssemblyReference.cache
