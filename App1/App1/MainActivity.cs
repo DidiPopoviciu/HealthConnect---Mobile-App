@@ -13,18 +13,25 @@ using Android.Bluetooth;
 using Java.Util;
 using System.IO;
 using System.Threading.Tasks;
+using Java.Lang;
+using System.Text.RegularExpressions;
 
 namespace App1
 {
     [Activity(Label = "MainActivity")]
     public class MainActivity : Activity
     {
-        Button butonCautaBluetooth;
-        TextView Rezultat;
+        Button butonCautaBluetooth, butonConnectArduino;
+        TextView Rezultat, bluetoothConn;
+
+        int bluetoothConnected;
+        string data = "";
+        string olddata = "";
+
         private BluetoothAdapter mBluetoothAdapter = null;
         private BluetoothSocket btSocket = null;
         //MAC adress of bluetooth device
-        private static string address = "";
+        private static string address = "00:06:66:4E:DA:6C";
         //private ID of communication
         private static UUID MY_UUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -41,16 +48,23 @@ namespace App1
             SetContentView(Resource.Layout.Main);
 
             butonCautaBluetooth = FindViewById<Button>(Resource.Id.button1);
+            butonConnectArduino = FindViewById<Button>(Resource.Id.button3);
             Rezultat = FindViewById<TextView>(Resource.Id.textView3);
-
+            bluetoothConn = FindViewById<TextView>(Resource.Id.textView4);
             butonCautaBluetooth.Click += delegate
             {
-                CheckBt();
+                bluetoothConnected = CheckBt();
             };
+
+            butonConnectArduino.Click += delegate
+            {
+                Connect();
+            };
+
         }
 
-        
-        private void CheckBt()
+
+        private int CheckBt()
         {
 
             mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
@@ -58,38 +72,43 @@ namespace App1
             if (mBluetoothAdapter.Enable())
             {
                 Rezultat.Text = "Bluetooth activat";
+                return 1;
             }
             if (mBluetoothAdapter == null)
             {
                 Rezultat.Text = "Nu exista modul de Bluetooth sau este ocupat";
+                return 0;
             }
+            return 0;
         }
 
         public void Connect()
         {
-            BluetoothDevice device = mBluetoothAdapter.GetRemoteDevice(address);
-            System.Console.WriteLine("Comexiune in curs" + device);
 
-            
+            bluetoothConn.Text += "Cautare dispozitiv remote";
+            BluetoothDevice device = mBluetoothAdapter.GetRemoteDevice(address);
+            bluetoothConn.Text += "Comexiune in curs" + device.Name + "\n";
+
+            //Thread.Sleep(20000);
             mBluetoothAdapter.CancelDiscovery();
             try
             {
                 btSocket = device.CreateRfcommSocketToServiceRecord(MY_UUID);
                 btSocket.Connect();
-                System.Console.WriteLine("Conexiune Creata");
+                bluetoothConn.Text = bluetoothConn.Text + "Conexiune Creata";
             }
             catch (System.Exception e)
             {
-                Console.WriteLine(e.Message);
+                bluetoothConn.Text += e.Message;
                 try
                 {
                     btSocket.Close();
                 }
                 catch (System.Exception)
                 {
-                    System.Console.WriteLine("Conexiune nereusita");
+                    bluetoothConn.Text += "Conexiune nereusita";
                 }
-                System.Console.WriteLine("Socket creat");
+                bluetoothConn.Text += "Socket creat";
             }
             beginListenForData();
 
@@ -104,10 +123,11 @@ namespace App1
             }
             catch (System.IO.IOException ex)
             {
-                Console.WriteLine(ex.Message);
+                Rezultat.Text = ex.Message;
             }
 
-            Task.Factory.StartNew(() => {
+            Task.Factory.StartNew(() =>
+            {
                 byte[] buffer = new byte[1024];
                 int bytes;
                 while (true)
@@ -117,16 +137,21 @@ namespace App1
                         bytes = inStream.Read(buffer, 0, buffer.Length);
                         if (bytes > 0)
                         {
-                            RunOnUiThread(() => {
+                            RunOnUiThread(() =>
+                            {
                                 string valor = System.Text.Encoding.ASCII.GetString(buffer);
-                                Rezultat.Text = Rezultat.Text + "\n" + valor;
+                                Rezultat.Text = Rezultat.Text + " " + valor;
+                                olddata = data;
+                                data = string.Concat(olddata, valor);
+                                bluetoothConn.Text = Regex.Replace(data, @"\n|\t|\r", "");
                             });
                         }
                     }
                     catch (Java.IO.IOException)
                     {
-                        RunOnUiThread(() => {
-                            Rezultat.Text = string.Empty;
+                        RunOnUiThread(() =>
+                        {
+                            bluetoothConn.Text = string.Empty;
                         });
                         break;
                     }

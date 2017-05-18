@@ -72,6 +72,12 @@ namespace App1
 			// aapt resource value: 0x7f050006
 			public const int button2 = 2131034118;
 			
+			// aapt resource value: 0x7f050008
+			public const int button3 = 2131034120;
+			
+			// aapt resource value: 0x7f05000b
+			public const int button41 = 2131034123;
+			
 			// aapt resource value: 0x7f050004
 			public const int editText1 = 2131034116;
 			
@@ -90,8 +96,11 @@ namespace App1
 			// aapt resource value: 0x7f050001
 			public const int textView2 = 2131034113;
 			
-			// aapt resource value: 0x7f050008
-			public const int textView3 = 2131034120;
+			// aapt resource value: 0x7f05000a
+			public const int textView3 = 2131034122;
+			
+			// aapt resource value: 0x7f050009
+			public const int textView4 = 2131034121;
 			
 			static Id()
 			{
@@ -114,6 +123,9 @@ namespace App1
 			
 			// aapt resource value: 0x7f030002
 			public const int Main = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int Recomandari = 2130903043;
 			
 			static Layout()
 			{

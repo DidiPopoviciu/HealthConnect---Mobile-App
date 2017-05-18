@@ -13,10 +13,7 @@ namespace App1
 
         ImageView logo_firstPage;
         
-        public static MobileServiceClient MobileService =
-        new MobileServiceClient(
-        "https://softmedmobile.azurewebsites.net"
-        );
+      
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -25,11 +22,16 @@ namespace App1
             logo_firstPage = FindViewById<ImageView>(Resource.Id.imageView1);
             logo_firstPage.Click += delegate
             {
-                var loginActivity = new Intent(this, typeof(LoginActivity));
-                StartActivity(loginActivity);
-                
+                //var loginActivity = new Intent(this, typeof(LoginActivity));
+                //StartActivity(loginActivity);
+                var mainActivity = new Intent(this, typeof(MainActivity));
+                StartActivity(mainActivity);
+                //var recomandari = new Intent(this, typeof(RecomandriActivity));
+                //StartActivity(recomandari);
+
+
             };
-            
+
 
         }
 

@@ -6,6 +6,10 @@ App1.MainActivity, App1;md5579855c995bdb073d8182511e793544c.MainActivity
 App1.MainActivity, App1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5579855c995bdb073d8182511e793544c.MainActivity
 App1.MainActivity;md5579855c995bdb073d8182511e793544c.MainActivity
 app1.MainActivity;md5579855c995bdb073d8182511e793544c.MainActivity
+App1.RecomandriActivity, App1;md5579855c995bdb073d8182511e793544c.RecomandriActivity
+App1.RecomandriActivity, App1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5579855c995bdb073d8182511e793544c.RecomandriActivity
+App1.RecomandriActivity;md5579855c995bdb073d8182511e793544c.RecomandriActivity
+app1.RecomandriActivity;md5579855c995bdb073d8182511e793544c.RecomandriActivity
 App1.SplashScreenActivity, App1;md5579855c995bdb073d8182511e793544c.SplashScreenActivity
 App1.SplashScreenActivity, App1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5579855c995bdb073d8182511e793544c.SplashScreenActivity
 App1.SplashScreenActivity;md5579855c995bdb073d8182511e793544c.SplashScreenActivity

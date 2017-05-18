@@ -5,7 +5,9 @@ C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\mscorlib.dll
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.Core.dll
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.dll
+C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.Net.dll
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.Net.Http.dll
+C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.Web.Services.dll
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.Xml.dll
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\System.Xml.Linq.dll
 C:\Users\Didii\documents\visual studio 2017\Projects\App1\App1\obj\Debug\android\assets\Microsoft.WindowsAzure.Mobile.dll

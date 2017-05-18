@@ -9,6 +9,7 @@
   <application android:label="App1" android:theme="@android:style/Theme.Light.NoTitleBar" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true">
     <activity android:label="LoginActivity" android:name="md5579855c995bdb073d8182511e793544c.LoginActivity" />
     <activity android:label="MainActivity" android:name="md5579855c995bdb073d8182511e793544c.MainActivity" />
+    <activity android:label="RecomandriActivity" android:name="md5579855c995bdb073d8182511e793544c.RecomandriActivity" />
     <activity android:icon="@drawable/health_connect_android_icon" android:label="Health Connect" android:name="md5579855c995bdb073d8182511e793544c.SplashScreenActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
