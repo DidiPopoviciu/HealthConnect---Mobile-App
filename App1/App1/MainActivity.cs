@@ -50,6 +50,7 @@ namespace App1
             butonCautaBluetooth = FindViewById<Button>(Resource.Id.button1);
             butonConnectArduino = FindViewById<Button>(Resource.Id.button3);
             Rezultat = FindViewById<TextView>(Resource.Id.textView3);
+
             bluetoothConn = FindViewById<TextView>(Resource.Id.textView4);
             butonCautaBluetooth.Click += delegate
             {
@@ -140,10 +141,12 @@ namespace App1
                             RunOnUiThread(() =>
                             {
                                 string valor = System.Text.Encoding.ASCII.GetString(buffer);
-                                Rezultat.Text = Rezultat.Text + " " + valor;
-                                olddata = data;
-                                data = string.Concat(olddata, valor);
-                                bluetoothConn.Text = Regex.Replace(data, @"\n|\t|\r", "");
+                                Rezultat.Text =  valor;
+                                //olddata = data;
+                                data = valor;
+                                bluetoothConn.Text = data;// Regex.Replace(data, @"\n|\t|\r", "");
+                                data = "";
+                                bytes = 0;
                             });
                         }
                     }
@@ -151,7 +154,7 @@ namespace App1
                     {
                         RunOnUiThread(() =>
                         {
-                            bluetoothConn.Text = string.Empty;
+                            bluetoothConn.Text += "Java.IO.Exception";
                         });
                         break;
                     }
