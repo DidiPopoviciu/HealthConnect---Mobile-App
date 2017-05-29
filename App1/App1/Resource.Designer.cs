@@ -75,8 +75,8 @@ namespace App1
 			// aapt resource value: 0x7f050008
 			public const int button3 = 2131034120;
 			
-			// aapt resource value: 0x7f05000b
-			public const int button41 = 2131034123;
+			// aapt resource value: 0x7f050010
+			public const int button41 = 2131034128;
 			
 			// aapt resource value: 0x7f050004
 			public const int editText1 = 2131034116;
@@ -96,11 +96,26 @@ namespace App1
 			// aapt resource value: 0x7f050001
 			public const int textView2 = 2131034113;
 			
-			// aapt resource value: 0x7f05000a
-			public const int textView3 = 2131034122;
-			
 			// aapt resource value: 0x7f050009
 			public const int textView4 = 2131034121;
+			
+			// aapt resource value: 0x7f05000b
+			public const int textView6 = 2131034123;
+			
+			// aapt resource value: 0x7f05000d
+			public const int textView7 = 2131034125;
+			
+			// aapt resource value: 0x7f05000e
+			public const int textViewEcg = 2131034126;
+			
+			// aapt resource value: 0x7f05000f
+			public const int textViewInformatii = 2131034127;
+			
+			// aapt resource value: 0x7f05000c
+			public const int textViewPuls = 2131034124;
+			
+			// aapt resource value: 0x7f05000a
+			public const int textViewTemp = 2131034122;
 			
 			static Id()
 			{

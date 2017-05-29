@@ -40,32 +40,33 @@ namespace App1
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Recomandari);
+            /*  SetContentView(Resource.Layout.Recomandari);
 
-            getActivities = FindViewById<Button>(Resource.Id.button41);
-            recomandari = FindViewById<TextView>(Resource.Id.textView1);
-            getActivities.Click += async delegate
-            {
-                await getRequest();
-            };
-        }
-        private async Task getRequest()
-        {
-            client = new HttpClient();
-            var response = await client.GetAsync(new Uri("https://healthconnectapi.azurewebsites.net/api/Recomandare/1881211887143"));
+              getActivities = FindViewById<Button>(Resource.Id.button41);
+              recomandari = FindViewById<TextView>(Resource.Id.textView1);
+              getActivities.Click += async delegate
+              {
+                  await getRequest();
+              };
+          }
+          private async Task getRequest()
+          {
+              client = new HttpClient();
+              var response = await client.GetAsync(new Uri("https://healthconnectapi.azurewebsites.net/api/Recomandare/1881211887143"));
 
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                // recomandari.Text = content;
-                var result = JsonConvert.DeserializeObject<List<Recomandare>>(content);
-                foreach (var recomandare in result)
-                {
-                    recomandari.Text += "Tip Actiitate:\n" + recomandare.TipActivitate + "\nMesaj Activitate:\n" + recomandare.Mesaj + "\n --------------------\n";
-                }
-            }
+              if (response.IsSuccessStatusCode)
+              {
+                  string content = await response.Content.ReadAsStringAsync();
+                  // recomandari.Text = content;
+                  var result = JsonConvert.DeserializeObject<List<Recomandare>>(content);
+                  foreach (var recomandare in result)
+                  {
+                      recomandari.Text += "Tip Actiitate:\n" + recomandare.TipActivitate + "\nMesaj Activitate:\n" + recomandare.Mesaj + "\n --------------------\n";
+                  }
+              }
 
-            await Task.Delay(1);
+             */
+            //await Task.Delay(1);
         }
     }
 }

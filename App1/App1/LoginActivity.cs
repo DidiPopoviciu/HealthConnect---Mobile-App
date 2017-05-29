@@ -43,7 +43,7 @@ namespace App1
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Login);
+       /*     SetContentView(Resource.Layout.Login);
             butonLogin = FindViewById<Button>(Resource.Id.button2);
             butonLogin.Click += delegate
             {
@@ -51,9 +51,9 @@ namespace App1
                 password = FindViewById<EditText>(Resource.Id.editText2);
 
                 authenticateAsync(userName.Text, password.Text);
-            };
+            };*/
         }
-        private async System.Threading.Tasks.Task authenticateAsync(string username, string password)
+    /*    private async System.Threading.Tasks.Task authenticateAsync(string username, string password)
         {
             string passwordchiper = Encrypt(password);
             HttpClient client = new HttpClient();
@@ -88,6 +88,6 @@ namespace App1
             byteBuff = Encoding.UTF8.GetBytes(source);
             string cipher = Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
             return HttpUtility.UrlEncode(cipher);
-        }
+        }*/
     }
 }
