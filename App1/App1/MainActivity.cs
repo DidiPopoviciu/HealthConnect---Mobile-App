@@ -27,6 +27,7 @@ namespace App1
         int error_couner = 0;
         private BluetoothAdapter mBluetoothAdapter = null;
         private BluetoothSocket btSocket = null;
+        private BluetoothSocket _socket = null;
         //MAC adress of bluetooth device
         private static string address = "00:06:66:4E:DA:6C";
         //private ID of communication
@@ -58,6 +59,7 @@ namespace App1
             butonCautaBluetooth.Click += delegate
             {
                 bluetoothConnected = CheckBt();
+                
             };
 
             butonConnectArduino.Click += delegate
@@ -90,31 +92,45 @@ namespace App1
         {
 
             Rezultat.Text += "Cautare dispozitiv remote";
-            BluetoothDevice device = mBluetoothAdapter.GetRemoteDevice(address);
-            Rezultat.Text += "Comexiune in curs" + device.Name + "\n";
-
-            //Thread.Sleep(20000);
-            mBluetoothAdapter.CancelDiscovery();
             try
             {
-                btSocket = device.CreateRfcommSocketToServiceRecord(MY_UUID);
-                btSocket.Connect();
-                Rezultat.Text = Rezultat.Text + "Conexiune Creata";
-                beginListenForData();
+                BluetoothDevice device = (from bd in mBluetoothAdapter.BondedDevices
+                                          where bd.Name == "Nexus 5X"
+                                          select bd).FirstOrDefault();
+                try
+                {
+                    //btSocket = device.CreateRfcommSocketToServiceRecord(MY_UUID);
+                    //btSocket.Connect();
+                    _socket = device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
+                    // _socket.ConnectAsync();
+                    _socket.Connect();
+                    Rezultat.Text = Rezultat.Text + "Conexiune Creata";
+                    beginListenForData();
+                }
+                catch (System.Exception e)
+                {
+                    Rezultat.Text += e.Message;
+                    try
+                    {
+                        _socket.Close();
+                    }
+                    catch (System.Exception)
+                    {
+                        Rezultat.Text += "Conexiune nereusita" + "\n";
+                    }
+                    //Rezultat.Text += "Socket creat";
+                }
             }
             catch (System.Exception e)
             {
-                Rezultat.Text += e.Message;
-                try
-                {
-                    btSocket.Close();
-                }
-                catch (System.Exception)
-                {
-                    Rezultat.Text += "Conexiune nereusita";
-                }
-                Rezultat.Text += "Socket creat";
+                Rezultat.Text += e.Message + "\n";
             }
+            ///BluetoothDevice device = mBluetoothAdapter.GetRemoteDevice(address);
+            //Rezultat.Text += "Comexiune in curs" + device.Name + "\n";
+
+            //Thread.Sleep(20000);
+            mBluetoothAdapter.CancelDiscovery();
+            
             
 
             //writeData(dataToSend);
@@ -124,7 +140,7 @@ namespace App1
         {
             try
             {
-                inStream = btSocket.InputStream;
+                inStream = _socket.InputStream;
             }
             catch (System.IO.IOException ex)
             {
@@ -139,41 +155,53 @@ namespace App1
                 {
                     try
                     {
-                         System.Threading.Tasks.Task.Delay(20);
                         bytes = inStream.Read(buffer, 0, buffer.Length);
-                        if (bytes > 1)
+                        string valor = System.Text.Encoding.ASCII.GetString(buffer);
+                        if (bytes > 100)
                         {
                             RunOnUiThread(() =>
                             {
-                                string valor = System.Text.Encoding.ASCII.GetString(buffer);
-                                if(valor.Length != 0)
+                               
+                                if (!(System.String.IsNullOrEmpty(valor)))
                                 {
-                                    int index = 0 ;
+                                    int index = 0;
                                     Rezultat.Text = valor;
                                     data = valor;
 
                                     dataTable = data.Split(';');
 
                                     for (int i = 0; i < dataTable.Length; i++)
-                                        {
+                                    {
                                         if (dataTable[i] != "\0" && (dataTable[i].Contains("T:")))
                                         {
                                             if (dataTable[i].Contains("*T:"))
                                             {
                                                 string[] temp_table = dataTable[i].Split('*');
                                                 //bluetoothConn.Text += "1*." + temp_table[1] + "\n";
-                                                temp = temp_table[1].Trim('T', ':') ;
+                                                if (!(temp_table[1].Contains(",")))
+                                                {
+                                                    temp = temp_table[1].Trim('T', ':');
+                                                }
+
                                             }
                                             else
-                                                //bluetoothConn.Text += "1." + dataTable[i] + "\n";
-                                                temp = dataTable[i].Trim('T', ':');
+                                            {
+                                                if (!(dataTable[i].Contains(",")))
+                                                {
+                                                    temp = dataTable[i].Trim('T', ':');
+                                                }
+                                            }
+
                                         }
                                         else
                                         {
                                             if (dataTable[i] != "\0" && (dataTable[i].Contains("B:")))
                                             {
-                                               // bluetoothConn.Text += "2." + dataTable[1] + "\n";
-                                                puls = dataTable[i].Trim('B', ':');
+                                                // bluetoothConn.Text += "2." + dataTable[1] + "\n";
+                                                if (!(dataTable[i].Contains(",")))
+                                                {
+                                                    puls = dataTable[i].Trim('B', ':');
+                                                }
                                             }
                                             else
                                             {
@@ -219,26 +247,28 @@ namespace App1
                                     Temperatura.Text = temp;
                                     Puls.Text = puls;
                                     ECG.Text = ecg_str;
-                                    //string resoult = "1." + temp + "\n2." + puls + "\n3." + ecg_str;
-                                    //Rezultat.Text = resoult;
-                                    //try
-                                    //{
-                                    //    for (int i = 0; i < 4; i++)
-                                    //        bluetoothConn.Text += i + ":   " + dataTable[i] + "\n";
-                                    //}
-                                    //catch (System.IndexOutOfRangeException)
-                                    //{
-                                    //    error_couner++;
-                                    //    bluetoothConn.Text = error_couner + "parse error\n";
-                                    //}
+
                                     data = "";
                                     bytes = 0;
                                     Array.Clear(buffer, 0, buffer.Length);
                                 }
+                                System.Threading.Tasks.Task.Delay(5000);
+
                                 //olddata = data;
-                               // bluetoothConn.Text = data;// Regex.Replace(data, @"\n|\t|\r", "");
-                               
+                                // bluetoothConn.Text = data;// Regex.Replace(data, @"\n|\t|\r", "");
+
                             });
+                        }
+                        else
+                        {
+                            RunOnUiThread(() =>
+                            {
+                                Rezultat.Text = valor;
+                                data = "";
+                                bytes = 0;
+                                Array.Clear(buffer, 0, buffer.Length);
+                            });
+                            
                         }
                     }
                     catch (Java.IO.IOException)
