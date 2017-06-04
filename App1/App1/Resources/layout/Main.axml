@@ -45,12 +45,12 @@
     <TextView
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120.5dp"
         android:id="@+id/textViewEcg" />
     <TextView
         android:text="Text"
         android:layout_width="match_parent"
-        android:layout_height="76.5dp"
+        android:layout_height="427.5dp"
         android:id="@+id/textViewInformatii"
         android:scrollbars="vertical"
         android:layout_marginBottom="2.0dp" />

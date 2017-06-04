@@ -18,29 +18,37 @@ namespace App1
     [Activity(Label = "MainActivity")]
     public class MainActivity : Activity
     {
+        /// <summary>
+        /// this is the sheeet
+        /// </summary>
         Button butonCautaBluetooth, butonConnectArduino;
         TextView Rezultat, Puls, Temperatura, ECG;
+
 
         int bluetoothConnected;
         string data = "";
         string[] dataTable;
         int error_couner = 0;
+
         private BluetoothAdapter mBluetoothAdapter = null;
         private BluetoothSocket btSocket = null;
         private BluetoothSocket _socket = null;
-        //MAC adress of bluetooth device
-        private static string address = "00:06:66:4E:DA:6C";
-        //private ID of communication
         private static UUID MY_UUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
 
+        float[] temp_table = new float[10];
+        int[] puls_table= new int[10];
+        string[] ecg_data_table = new string[10];
+
+        bool bluetoothChecked = false;
         string temp = "";
         string puls = "";
         string[] ecg;
         string ecg_str;
+        int counter = -1;
         private Stream outStream = null;
         private Stream inStream = null;
 
-        private Java.Lang.String dataToSend;
+//        private Java.Lang.String dataToSend;
 
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -59,11 +67,16 @@ namespace App1
             butonCautaBluetooth.Click += delegate
             {
                 bluetoothConnected = CheckBt();
+                bluetoothChecked = true;
                 
             };
 
             butonConnectArduino.Click += delegate
             {
+                if(!bluetoothChecked)
+                {
+                    bluetoothConnected = CheckBt();
+                }
                 Connect();
             };
             
@@ -95,7 +108,7 @@ namespace App1
             try
             {
                 BluetoothDevice device = (from bd in mBluetoothAdapter.BondedDevices
-                                          where bd.Name == "Nexus 5X"
+                                          where bd.Name == "RN42-DA6C"
                                           select bd).FirstOrDefault();
                 try
                 {
@@ -151,21 +164,29 @@ namespace App1
             {
                 byte[] buffer = new byte[1024];
                 int bytes;
+                long starTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                long endTime = 0;
+                long tmeElapsed = 0;
                 while (true)
                 {
                     try
                     {
+                        
+                        Task.Delay(1000).Wait();
+                        
+                        
                         bytes = inStream.Read(buffer, 0, buffer.Length);
                         string valor = System.Text.Encoding.ASCII.GetString(buffer);
-                        if (bytes > 100)
+                        if (bytes > 1)
                         {
                             RunOnUiThread(() =>
                             {
                                
                                 if (!(System.String.IsNullOrEmpty(valor)))
                                 {
-                                    int index = 0;
-                                    Rezultat.Text = valor;
+
+                                    counter++;
+                                    
                                     data = valor;
 
                                     dataTable = data.Split(';');
@@ -247,29 +268,75 @@ namespace App1
                                     Temperatura.Text = temp;
                                     Puls.Text = puls;
                                     ECG.Text = ecg_str;
-
+                                    temp_table[counter] = float.Parse(temp.Replace('.', ','));
+                                    puls_table[counter] = int.Parse(puls);
+                                    ecg_data_table[counter] = ecg_str;
                                     data = "";
                                     bytes = 0;
                                     Array.Clear(buffer, 0, buffer.Length);
+                                    endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                                    tmeElapsed = endTime - starTime;
+                                    if (counter >= 5 && tmeElapsed > 25000)
+                                    {
+                                        float media_temp = 0;
+                                        int media_puls = 0;
+                                        string media_ecg = "";
+                                        string data_to_send = "";
+
+                                        int nr_temp = 0;
+                                        int nr_puls = 0;
+
+                                        for(int i=0; i<temp_table.Length; i++)
+                                        {
+                                            if(temp_table[i]!= 0)
+                                            {
+                                                nr_temp++;
+                                                media_temp += temp_table[i];
+                                            }
+                                        }
+                                        media_temp /= (nr_temp * 100);
+
+                                        for (int i = 0; i < puls_table.Length; i++)
+                                        {
+                                            if (puls_table[i] != 0)
+                                            {
+                                                nr_puls++;
+                                                media_puls += puls_table[i];
+                                            }
+                                        }
+                                        media_puls /= nr_puls;
+
+                                        for (int i = 0; i < ecg_data_table.Length; i++)
+                                        {
+                                            if(ecg_data_table[i] != null)
+                                            {
+                                                media_ecg += ecg_data_table[i] + ",";
+                                            }
+                                        }
+                                        counter = 0;
+                                        endTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                                        tmeElapsed = endTime - starTime;
+                                        data_to_send +=tmeElapsed.ToString() + "\n" + media_temp.ToString() + "     " + media_puls.ToString() + "     " + media_ecg.ToString();
+                                        Rezultat.Text = data_to_send;
+                                        starTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+                                    }
                                 }
-                                System.Threading.Tasks.Task.Delay(5000);
-
-                                //olddata = data;
-                                // bluetoothConn.Text = data;// Regex.Replace(data, @"\n|\t|\r", "");
-
+                                Task.Delay(3000).Wait();
                             });
                         }
                         else
                         {
                             RunOnUiThread(() =>
                             {
-                                Rezultat.Text = valor;
+                                Rezultat.Text = "error invalid bits:" + valor;
                                 data = "";
                                 bytes = 0;
                                 Array.Clear(buffer, 0, buffer.Length);
                             });
                             
                         }
+
                     }
                     catch (Java.IO.IOException)
                     {
@@ -279,6 +346,7 @@ namespace App1
                         });
                         break;
                     }
+                    Task.Delay(3000).Wait();
                 }
             });
         }
